@@ -43,19 +43,20 @@ def setup(args):
         global BASE_DIR
         BASE_DIR = args[4]
 
-    if "chrome" in args[1].lower():
-        print("Opening Chrome...")
-        path   = os.path.join(os.getcwd(), "chromedriver.exe")
-        driver = webdriver.Chrome(executable_path=path, chrome_options=C_PROFILE)
-
-    elif "firefox" in args[1].lower():
-        print("Opening Firefox...")
-        path   = os.path.join(os.getcwd(), "geckodriver.exe")
-        driver = webdriver.Firefox(executable_path=path, firefox_profile=F_PROFILE)
-
-    else:
+    if "chrome" in args[1].lower() or "firefox" in args[1].lower():
         print("Argument Error: you have to choose between Chrome and Firefox in the first argument")
         sys.exit("wrong format argument")
+    else:
+        print("####################    JAPSCAN TO PNG    ####################")
+        if "chrome" in args[1].lower():
+            print("Opening Chrome...")
+            path   = os.path.join(os.getcwd(), "chromedriver.exe")
+            driver = webdriver.Chrome(executable_path=path, chrome_options=C_PROFILE)
+
+        elif "firefox" in args[1].lower():
+            print("Opening Firefox...")
+            path   = os.path.join(os.getcwd(), "geckodriver.exe")
+            driver = webdriver.Firefox(executable_path=path, firefox_profile=F_PROFILE)
 
     return driver
 
@@ -148,7 +149,6 @@ def write_image(elem, chap, page):
 
 
 if __name__ == "__main__":
-    print("####################    JAPSCAN TO PNG    ####################")
     driver = setup(sys.argv)
     try:
         run(driver)
