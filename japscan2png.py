@@ -10,12 +10,6 @@ from selenium.webdriver.support import expected_conditions as EC
 USAGE = ""
 
 
-
-
-
-
-
-
 BASE_DIR = "RESULT"
 
 SITE_BASE_URL = "https://www.japscan.to"
@@ -34,20 +28,6 @@ def setup(args):
         print(USAGE)
         sys.exit()
 
-    elif "chrome" in args[1].lower():
-        print("Opening Chrome...")
-        path   = os.path.join(os.getcwd(), "chromedriver.exe")
-        driver = webdriver.Chrome(executable_path=path, chrome_options=C_PROFILE)
-
-    elif "firefox" in args[1].lower():
-        print("Opening Firefox...")
-        path   = os.path.join(os.getcwd(), "geckodriver.exe")
-        driver = webdriver.Firefox(executable_path=path, firefox_profile=F_PROFILE)
-
-    else:
-        print("Argument Error: you have to choose between Chrome and Firefox in the first argument")
-        sys.exit("wrong format argument")
-
     global FIRST_CHAPTER_URL
     global LAST_CHAPTER_NUMBER
 
@@ -62,6 +42,20 @@ def setup(args):
     if len(args) == 5:
         global BASE_DIR
         BASE_DIR = args[4]
+
+    if "chrome" in args[1].lower():
+        print("Opening Chrome...")
+        path   = os.path.join(os.getcwd(), "chromedriver.exe")
+        driver = webdriver.Chrome(executable_path=path, chrome_options=C_PROFILE)
+
+    elif "firefox" in args[1].lower():
+        print("Opening Firefox...")
+        path   = os.path.join(os.getcwd(), "geckodriver.exe")
+        driver = webdriver.Firefox(executable_path=path, firefox_profile=F_PROFILE)
+
+    else:
+        print("Argument Error: you have to choose between Chrome and Firefox in the first argument")
+        sys.exit("wrong format argument")
 
     return driver
 
