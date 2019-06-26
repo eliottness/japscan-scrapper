@@ -48,6 +48,7 @@ def setup(args):
         sys.exit("wrong format argument")
     else:
         print("####################    JAPSCAN TO PNG    ####################")
+        
         if "chrome" in args[1].lower():
             print("Opening Chrome...")
             path   = os.path.join(os.getcwd(), "chromedriver.exe")
