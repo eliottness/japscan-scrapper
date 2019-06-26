@@ -10,7 +10,7 @@ from selenium.webdriver.support import expected_conditions as EC
 USAGE = ""
 
 
-BASE_DIR = "RESULT"
+BASE_DIR = os.path.join(os.getcwd(), "result")
 
 SITE_BASE_URL = "https://www.japscan.to"
 
@@ -48,7 +48,7 @@ def setup(args):
         sys.exit("wrong format argument")
     else:
         print("####################    JAPSCAN TO PNG    ####################")
-        
+
         if "chrome" in args[1].lower():
             print("Opening Chrome...")
             path   = os.path.join(os.getcwd(), "chromedriver.exe")
@@ -68,6 +68,7 @@ def run(driver):
 
     while True:
         time.sleep(1) #to let japscan recover his breath
+
         try:
             elem = WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located((By.ID, "image"))
@@ -98,7 +99,7 @@ def run(driver):
             else:
                 break
 
-        if i >= 10:
+        if i >= 10 or find_404(driver):
             print("Cannot reach the page, abort.")
             break
 
@@ -134,12 +135,10 @@ def chap_info(driver):
 
 def write_image(elem, chap, page):
 
-    path = os.path.join(os.getcwd(), BASE_DIR)
-
     if not os.path.exists(BASE_DIR):
         os.makedirs(BASE_DIR)
 
-    path  = os.path.join(path, str(chap))
+    path  = os.path.join(BASE_DIR, str(chap))
 
     if not os.path.exists(path):
         os.makedirs(path)
@@ -147,6 +146,14 @@ def write_image(elem, chap, page):
     path  = os.path.join(path, str(page) + ".png")
 
     elem.screenshot(path)
+
+def find_404(driver):
+    try:
+        driver.find_element_by_class_name("container text-center")
+    except Exception:
+        retrun False
+    else:
+        return True
 
 
 if __name__ == "__main__":
