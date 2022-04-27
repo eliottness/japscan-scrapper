@@ -151,7 +151,7 @@ def find_404(driver):
     try:
         driver.find_element_by_class_name("container text-center")
     except Exception:
-        retrun False
+        return False
     else:
         return True
 
